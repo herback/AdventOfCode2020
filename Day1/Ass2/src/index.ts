@@ -14,13 +14,15 @@ const calculator = (list: Array<number>) => {
     let mySet: Set<number> = new Set();
     let calcValue: number;
     let sum: number = 0;
-    for (let i: number = 0; i < list.length; i++) {
-        calcValue = 2020 - list[i];
-        if (mySet.has(calcValue)) {
-            sum = calcValue * list[i];
-            break;
+    for (let row: number = 0; row < list.length; row++) {
+        for (let col: number = 1; col < list.length; col++) {
+            calcValue = 2020 - list[row] - list[col];
+            if (mySet.has(calcValue)) {
+                sum = calcValue * list[row] * list[col];
+                break;
+            }
         }
-        mySet.add(list[i]);
+        mySet.add(list[row]);
     }
     return sum;
 };
