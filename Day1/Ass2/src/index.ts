@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 
-let input = fs.readFileSync('./data.txt').toString('utf-8').split('\n');
+let input: Array<string> = fs.readFileSync('./data.txt').toString('utf-8').split('\n');
 
-const convertStringListToNumberList = (list: Array<string>) => {
+const convertStringListToNumberList = (list: Array<string>): Array<number> => {
     let numberList = new Array<number>();
     list.forEach((entry) => {
         numberList.push(Number(entry));
@@ -10,7 +10,7 @@ const convertStringListToNumberList = (list: Array<string>) => {
     return numberList;
 };
 
-const calculator = (list: Array<number>) => {
+const calculator = (list: Array<number>): number => {
     let mySet: Set<number> = new Set();
     let calcValue: number;
     let sum: number = 0;
