@@ -1,25 +1,31 @@
 import * as fs from 'fs';
 
 let input: Array<string> = fs.readFileSync('./data.txt').toString('utf-8').split('\n');
-let validInputs: number = 0;
 
-const isValid = (line: string): boolean => {
-    let splittedLine: Array<string> = line.split(/\W+/);
-    let indexOne: number = Number(splittedLine[0]) - 1;
-    let indexTwo: number = Number(splittedLine[1]) - 1;
-    let charToCheck: string = splittedLine[2];
-    let password: string = splittedLine[3];
+const howManyTrees = (list: Array<string>, rowTravel: number, colTravel: number): number => {
+    let trees: number = 0;
+    let currentPos: number = rowTravel;
+    let inputWidth: number = list[0].length - 1;
 
-    let conditionOne: boolean = charToCheck === password.charAt(indexOne);
-    let conditionTwo: boolean = charToCheck === password.charAt(indexTwo);
-
-    return (conditionOne && !conditionTwo) || (!conditionOne && conditionTwo);
+    for (let col: number = colTravel; col < list.length; col += colTravel) {
+        if ('#' === list[col].charAt(currentPos)) {
+            trees++;
+        }
+        currentPos = (currentPos + rowTravel) % inputWidth;
+    }
+    return trees;
 };
 
-input.forEach((entry) => {
-    if (isValid(entry)) {
-        validInputs++;
-    }
-});
+let sumOfAllTreesMultiplied: number = howManyTrees(input, 1, 1);
+sumOfAllTreesMultiplied *= howManyTrees(input, 3, 1);
+sumOfAllTreesMultiplied *= howManyTrees(input, 5, 1);
+sumOfAllTreesMultiplied *= howManyTrees(input, 7, 1);
+sumOfAllTreesMultiplied *= howManyTrees(input, 1, 2);
 
-console.log('valid passwords: ' + validInputs);
+console.log('amount of trees: ' + sumOfAllTreesMultiplied);
+
+// //debugger code
+//         let replacer: string = list[col].substring(0, currentPos) + 'O' + list[col].substring(currentPos + 1);
+//             console.log(replacer);
+//         } else {
+//             console.log(list[col]);
